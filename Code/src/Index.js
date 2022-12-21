@@ -378,7 +378,7 @@ app.get('/', async function (req, res) {
   
 
     
-
+  res.set({'Content-Type': 'application/nodejs + pug; charset=utf-8'});
   res.render('index', {}); //printrez:printrez
 });
 
@@ -387,8 +387,13 @@ app.get('/collection', async function (req, res) {
 
   const data = await getDbSave()
 
-  res.json(JSON.parse(data));
 
+  dataret = JSON.parse(data)
+
+  res.type("application/json")
+  res.status(200).json({ status: "OK",
+   message: "Sucsesfully returned the whole collection",
+    response: dataret})
 
 });
 
@@ -397,8 +402,11 @@ app.get('/ids', async function (req, res) {
   const data = await getDbIDS()
 
 
-  res.json(data);
-
+  
+  res.type("application/json")
+  res.status(200).json({ status: "OK",
+   message: "Sucsesfully got all the IDs",
+    response: data})
 
 });
 
@@ -407,7 +415,12 @@ app.get('/actors', async function (req, res) {
   const data = await getDbActors()
 
 
-  res.json(data);
+  
+
+  res.type("application/json")
+  res.status(200).json({ status: "OK",
+   message: "Sucsesfully got all the actors",
+    response: data})
 
 
 });
@@ -417,7 +430,11 @@ app.get('/directors', async function (req, res) {
   const data = await getDbDirectors()
 
 
-  res.json(data);
+  
+  res.type("application/json")
+  res.status(200).json({ status: "OK",
+   message: "Sucsesfully returned all the directors",
+    response: data})
 
 
 });
@@ -427,10 +444,26 @@ app.get('/:id', async function (req, res) {
   
   console.log(req.params.id)
   let id = 100 + req.params.id;
-  
-  const data = await getDbID(req.params.id)
 
-  res.json(data);
+  if (isNaN(req.params.id) || req.params.id<0 || req.params.id>1000){
+
+    res.type("application/json")
+    res.status(400).json({ status: "Bad Request", 
+    message: "Bad request, bad URL and/or parameters"})
+
+
+  }
+  else{
+  
+    const data = await getDbID(req.params.id)
+
+    
+
+    res.type("application/json")
+    res.status(200).json({ status: "OK",
+    message: "Sucsesfully fetched movie by ID",
+      response: data})
+  }
 });
 
 app.get('/specification', async function (req, res) {
@@ -461,16 +494,22 @@ app.post('/addMovie', async function (req , res  ) {
     && parsed.movie_length != undefined)
     {
 
-      res.json({"okay":"Good column names"})
+     
 
       InsertDb([parsed.movie_id, parsed.movie_name, parsed.direcetor, parsed.genre, parsed.stars, parsed.rating, parsed.imdb_ranking, parsed.awards, parsed.movie_year, parsed.movie_length])
 
+
+      res.type("application/json")
+      res.status(201).json({ status: "Created", 
+      message: "Sucsefully added a new movie"})
 
     }
 
     else{
 
-      res.json({"error":"Wrong column names"})
+      res.type("application/json")
+      res.status(400).json({ status: "Bad Request", 
+      message: "Wrong collumn names"})
     }
 
 
@@ -493,16 +532,19 @@ app.delete('/', async function (req , res  ) {
   if(parsed.movie_id != undefined)
     {
 
-      res.json({"okay":"Good column names"})
-
       DeleteDb(parsed.movie_id)
 
+      res.type("application/json")
+      res.status(202).json({ status: "Deleted", 
+      message: "Sucsefully deleted a movie"})
 
     }
 
     else{
 
-      res.json({"error":"Wrong column names"})
+      res.type("application/json")
+      res.status(400).json({ status: "Bad Request", 
+      message: "Wrong collumn names"})
     }
 
 
@@ -533,14 +575,19 @@ app.put('/', async function (req , res  ) {
 
       
       PutDb(parsed.movie_id, parsed)
-      res.json({"sucsess":"Went thru"})
       
+      res.type("application/json")
+      res.status(201).json({ status: "Updated", 
+      message: "Sucsefully updated a movie"})
 
     }
 
     else{
 
-      res.json({"error":"Wrong column names"})
+      res.type("application/json")
+      res.status(400).json({ status: "Bad Request", 
+      message: "Wrong collumn names"})
+
     }
 
 

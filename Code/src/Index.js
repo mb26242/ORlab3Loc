@@ -439,6 +439,125 @@ app.get('/directors', async function (req, res) {
 
 });
 
+app.get('/specification', async function (req, res) {
+
+  data = {
+    "title": "IMDB top movies API",
+    "description": "API specificaton for top IMDB movies",
+    "version": "3.0",
+    "paths": {
+        "/{movie_id}":{
+          "summary": "Get movie by ID",
+          "responses": {
+            "200": {
+              "type": "application/json",
+              "description": "Sucsesfully fetched movie by ID",
+              "content": "movie (movie_id, movie_name, direcetor, genre, stars, rating, imdb_ranking, awards, movie_year, movie_length)"
+            },
+            "400": {
+              "type": "application/json",
+              "description": "Bad request, bad URL and/or parameters",
+            }
+          }
+        },
+
+        "/addMovie":{
+          "summary": "Add a movie by ID",
+          "responses": {
+            "201": {
+              "type": "application/json",
+              "description": "Sucsefully added a new movie",
+              "body": "movie_id, movie_name, direcetor, genre, stars, rating, imdb_ranking, awards, movie_year, movie_length"
+            },
+            "400": {
+              "type": "application/json",
+              "description": "Wrong collumn names",
+            }
+          }},
+
+        "/ids": {
+          "summary": "Sucsesfully fetched movie by ID",
+          "responses": {
+            "200": {
+              "type": "application/json",
+              "description": "Sucsesfully got all the IDs",
+              "body-description": "All the IDS from the collection"
+            }
+          }
+        },
+
+        "/directors": {
+          "summary": "Get all the directors",
+          "responses": {
+            "200": {
+              "type": "application/json",
+              "description": "Sucsefully returned all the directors",
+              "body-description": "All the directors from the database"
+            }
+          }},
+
+        "/actors": {
+          "summary": "Get all the actors",
+          "responses": {
+            "200": {
+              "type": "application/json",
+              "description": "Sucsesfully got all the actors",
+              "body-description": "all the actors from database"
+            }
+          }},
+
+          "/collection": {
+            "summary": "Get the whole collection",
+            "responses": {
+              "200": {
+                "type": "application/json",
+                "description": "Sucsesfully returned the whole collection",
+                "body-description": "all the movies"
+              }
+            }},
+
+        "/":{
+          "delete":{
+            "summary": "Delete a movie by ID",
+            "responses": {
+              "202": {
+                "type": "application/json",
+                "description": "Sucsefully deleted a movie",
+                "body": "movie_id"
+              },
+              "400": {
+                "type": "application/json",
+                "description": "Wrong collumn names",
+              }
+            }},
+
+          "put":{
+            "summary": "Update a movie",
+            "responses": {
+              "201": {
+                "type": "application/json",
+                "description": "Sucsefully updated a movie",
+                "body": "movie_id, additional parameters to change"
+              },
+              "400": {
+                "type": "application/json",
+                "description": "Wrong collumn names",
+              }
+            }}
+        }
+
+    }
+
+
+  }
+  
+  res.type("application/json")
+  res.status(200).json({ status: "OK",
+  message: "Returned API specification",
+    response: data});
+
+
+});
 
 app.get('/:id', async function (req, res) {
   
@@ -466,15 +585,7 @@ app.get('/:id', async function (req, res) {
   }
 });
 
-app.get('/specification', async function (req, res) {
 
-  const data = await getDbDirectors()
-
-
-  res.json(data);
-
-
-});
 
 app.post('/addMovie', async function (req , res  ) {
   

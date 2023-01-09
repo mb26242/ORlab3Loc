@@ -6,6 +6,14 @@ h1 {
   
 }
 
+h2 {
+  color: rgb(161, 243, 9);
+  font-family: verdana;
+  font-size: 200%;
+  text-align: center;
+  
+}
+
 p.srch {
   color: black;
   font-family: courier;

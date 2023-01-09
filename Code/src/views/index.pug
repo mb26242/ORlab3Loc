@@ -10,8 +10,25 @@ html
         
         h1 TOP 10 rated IMDB movies
 
+    
+
+ 
+        if username
+            h2 Welcome #{username}
+        
         ul 
-            li: a(href='/', title='Home') Frontpage
+        
+
+            if username
+                li: a(href='/profile', title='Home') Profile
+                li: a(href='/', title='Home') Refresh
+                li: form(action="/logout", method="get")
+                    input(type="submit", value="Logout " + username)
+                
+               
+
+            else
+                li: a(href='/auth', title='Sign up') PRIJAVA 
 
         
             

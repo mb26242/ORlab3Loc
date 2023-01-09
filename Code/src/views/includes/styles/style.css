@@ -95,6 +95,15 @@ body {
  
 }
 
+#aut {
+  background-color: yellow;
+  font-size: 130%;
+
+  border: 1px solid black;
+  padding: 2px;
+  margin: 2px;
+}
+
 div.foot{
   position: absolute;
   bottom: 0;

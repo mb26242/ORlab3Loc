@@ -20,15 +20,15 @@ html
         
 
             if username
-                li: a(href='/profile', title='Home') Profile
-                li: a(href='/', title='Home') Refresh
+                li: a#aut(href='/profile', title='Home') Profile
+                li: a#aut(href='/', title='Home') Refresh
                 li: form(action="/logout", method="get")
                     input(type="submit", value="Logout " + username)
                 
                
 
             else
-                li: a(href='/auth', title='Sign up') PRIJAVA 
+                li: a#aut(href='/auth', title='Sign up') PRIJAVA 
 
         
             
